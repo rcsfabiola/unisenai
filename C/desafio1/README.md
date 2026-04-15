@@ -14,18 +14,18 @@ desafio1/
 ## Estrutura de Dados
   ### Requisição (`requisicao.h`)
   Representa uma requisição de atendimento de saúde com os campos:
-  | Campo                 | Tipo            | Tamanho           | Descrição |
-  | `nomePaciente`        | `char[]`        | 40 caracteres     | Nome do paciente |
+  | Campo                 | Tipo            | Tamanho           | Descrição                               |
+  | `nomePaciente`        | `char[]`        | 40 caracteres     | Nome do paciente                        |
   | `codigoInscricao`     | `int`           | —                 | Código de inscrição no sistema de saúde |
-  | `codigoProcedimento`  | `char[]`        | 10 caracteres     | Código do procedimento solicitado |
+  | `codigoProcedimento`  | `char[]`        | 10 caracteres     | Código do procedimento solicitado       |
 
   ### Fila (`estrutura.h`)
   Fila circular com array estático de capacidade máxima de **1000 requisições**.
   | Campo     | Tipo            | Descrição |
   | `dados[]` | `Requisicao*[]` | Array de ponteiros para requisições |
-  | `inicio`  | `int`           | Índice do primeiro elemento |
-  | `fim`     | `int`           | Índice do próximo espaço livre |
-  | `tamanho` | `int`           | Quantidade atual de requisições |
+  | `inicio`  | `int`           | Índice do primeiro elemento         |
+  | `fim`     | `int`           | Índice do próximo espaço livre      |
+  | `tamanho` | `int`           | Quantidade atual de requisições     |
 
 ## Funções
   ### requisicao.h / requisicao.c
