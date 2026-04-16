@@ -22,7 +22,7 @@ void inserir(Estrutura* e, Requisicao* r);
 // Remove e retorna a requisição do início da fila (FIFO)
 Requisicao* remover(Estrutura* e);
 
-// Retorna a quantidade de requisições aguardando na fila
+// Fornecer a quantidade de requisições de espera
 int get_size(Estrutura* e);
 
 // Libera a memória da estrutura (não libera as requisições individualmente)

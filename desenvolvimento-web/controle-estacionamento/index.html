@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ParkControl — Sistema de Estacionamento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <span class="logo-main">ParkControl</span>
+      <span class="logo-sub">v1.0 — Residencial</span>
+    </div>
+    <div class="section-badge">Controle de Estacionamento</div>
+    <nav>
+      <button class="nav-btn active" onclick="showScreen('cadastro')">Cadastrar</button>
+      <button class="nav-btn" onclick="showScreen('listagem')">Listar Vagas</button>
+    </nav>
+  </header>
+  <main>
+    <!-- TELA 1 — CADASTRO DE RESERVA -->
+    <div id="screen-cadastro" class="screen active">
+      <div class="section-header">
+        <div>
+          <h1 class="section-title">Cadastrar Reserva</h1>
+        </div>
+      </div>
+      <div class="form-card">
+        <form id="formCadastro" novalidate>
+          <div class="form-grid">
+            <p class="form-section-label">🚗 Dados do Veículo</p>
+            <div class="form-group">
+              <label for="placa">Placa do Veículo</label>
+              <input type="text" id="placa" placeholder="ABC1234 ou ABC1D23" maxlength="8" />
+              <span class="field-error" id="err-placa"></span>
+            </div>
+            <div class="form-group">
+              <label for="modelo">Modelo do Veículo</label>
+              <input type="text" id="modelo" placeholder="Ex: Honda Civic" />
+              <span class="field-error" id="err-modelo"></span>
+            </div>
+            <div class="form-group">
+              <label for="cor">Cor do Veículo</label>
+              <select id="cor">
+                <option value="">Selecione a cor</option>
+                <option>Branco</option><option>Preto</option><option>Prata</option>
+                <option>Cinza</option><option>Vermelho</option><option>Azul</option>
+                <option>Verde</option><option>Amarelo</option><option>Marrom</option>
+                <option>Outra</option>
+              </select>
+              <span class="field-error" id="err-cor"></span>
+            </div>
+            <hr class="form-divider" />
+            <p class="form-section-label">🏢 Dados do Proprietário</p>
+            <div class="form-group full">
+              <label for="nome">Nome do Proprietário</label>
+              <input type="text" id="nome" placeholder="Nome completo" />
+              <span class="field-error" id="err-nome"></span>
+            </div>
+            <div class="form-group">
+              <label for="apartamento">Número do Apartamento</label>
+              <input type="text" id="apartamento" placeholder="Ex: 301" />
+              <span class="field-error" id="err-apartamento"></span>
+            </div>
+            <div class="form-group">
+              <label for="bloco">Bloco do Apartamento</label>
+              <select id="bloco">
+                <option value="">Selecione o bloco</option>
+                <option>A</option><option>B</option><option>C</option>
+                <option>D</option><option>E</option>
+              </select>
+              <span class="field-error" id="err-bloco"></span>
+            </div>
+            <hr class="form-divider" />
+            <p class="form-section-label">🅿️ Dados da Vaga</p>
+            <div class="form-group full">
+              <label for="vaga">Número da Vaga de Estacionamento</label>
+              <select id="vaga">
+                <option value="">Selecione uma vaga disponível</option>
+              </select>
+              <span class="field-error" id="err-vaga"></span>
+            </div>
+          </div>
+          <button type="submit" class="btn-save">✦ Salvar Reserva</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- TELA 2 — LISTAGEM DE VAGAS -->
+    <div id="screen-listagem" class="screen">
+      <div class="section-header">
+        <div>
+          <div class="section-badge">Mapa</div>
+          <h1 class="section-title">Vagas do <span>Estacionamento</span></h1>
+        </div>
+        <button class="btn-refresh" onclick="renderListing()">↻ Atualizar</button>
+      </div>
+      <div class="stats-row" id="statsRow"></div>
+      <div class="lot-container">
+        <div class="lot-header">
+          <span class="lot-title">MAPA DO ESTACIONAMENTO — CONDOMÍNIO RESIDENCIAL</span>
+          <div class="legend">
+            <div class="legend-item"><div class="legend-dot free"></div>Livre</div>
+            <div class="legend-item"><div class="legend-dot occupied"></div>Ocupada</div>
+          </div>
+        </div>
+        <div id="parkingMap"></div>
+      </div>
+    </div>
+  </main>
+  <!-- MODAL DE AÇÕES DA VAGA -->
+  <div class="modal-overlay" id="modalAcoes">
+    <div class="modal">
+      <div class="modal-stripe orange"></div>
+      <div class="modal-head">
+        <div class="modal-icon red">🔴</div>
+        <div>
+          <div class="modal-title" id="modalVagaTitulo">Vaga 00</div>
+          <div class="modal-subtitle">VAGA OCUPADA — SELECIONE UMA AÇÃO</div>
+        </div>
+      </div>
+      <div class="modal-info" id="modalVagaInfo"></div>
+      <div id="transferSection" style="display:none; margin-bottom:0.8rem;">
+        <span class="modal-label">Nova vaga de destino</span>
+        <select id="selectNovaVaga"></select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-action primary" id="btnTransferir" onclick="toggleTransfer()">⇄ Transferir para outra vaga</button>
+        <button class="btn-action danger" onclick="confirmarLiberar()">✕ Liberar esta vaga</button>
+        <button class="btn-action ghost" onclick="closeModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <!-- POPUP CONFIRMAÇÃO -->
+  <div class="popup-overlay" id="popup">
+    <div class="popup">
+      <div class="popup-icon">✔</div>
+      <div class="popup-title">Cadastro Realizado!</div>
+      <p class="popup-msg">A reserva foi registrada com sucesso no sistema.</p>
+      <div class="popup-detail" id="popupDetail"></div>
+      <button class="btn-close" onclick="closePopup()">Fechar</button>
+    </div>
+  </div>
+<script src="codigo.js"></script>
+</body>
+</html>
