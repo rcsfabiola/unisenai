@@ -5,6 +5,8 @@ public class Exercicios {
     public static void main(String[] args) {
       System.out.println("Hello, World 2!");
       System.out.print("olá Mundo 1");
+
+      // AlteraçãoTeste
       
         // System.out.println("Hello, World!");
         // int numero = 3;
