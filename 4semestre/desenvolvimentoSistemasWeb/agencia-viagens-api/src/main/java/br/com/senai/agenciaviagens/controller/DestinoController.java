@@ -21,43 +21,44 @@ public class DestinoController {
     }
 
     @PostMapping
-public ResponseEntity<Destino> cadastrar(@Valid @RequestBody Destino destino) {
-    Destino salvo = destinoService.cadastrar(destino);
-    return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
-}
+    public ResponseEntity<Destino> cadastrar(@Valid @RequestBody Destino destino) {
+        Destino salvo = destinoService.cadastrar(destino);
+        return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
+    }
 
-@GetMapping
-public ResponseEntity<List<Destino>> listarTodos() {
-    return ResponseEntity.ok(destinoService.listarTodos());
-}
-@GetMapping("/buscar")
-public ResponseEntity<List<Destino>> pesquisar(
-        @RequestParam(required = false) String nome,
-        @RequestParam(required = false) String localizacao) {
-    return ResponseEntity.ok(destinoService.pesquisar(nome, localizacao));
-}
+    @GetMapping
+    public ResponseEntity<List<Destino>> listarTodos() {
+        return ResponseEntity.ok(destinoService.listarTodos());
+    }
 
-@GetMapping("/{id}")
-public ResponseEntity<Destino> buscarPorId(@PathVariable Long id) {
-    return ResponseEntity.ok(destinoService.buscarPorId(id));
-}
-@PutMapping("/{id}")
-public ResponseEntity<Destino> atualizar(@PathVariable Long id,
-                                          @Valid @RequestBody Destino destino) {
-    return ResponseEntity.ok(destinoService.atualizar(id, destino));
-}
+    @GetMapping("/buscar")
+    public ResponseEntity<List<Destino>> pesquisar(
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String localizacao) {
+        return ResponseEntity.ok(destinoService.pesquisar(nome, localizacao));
+    }
 
-@PatchMapping("/{id}/avaliacoes")
-public ResponseEntity<Destino> registrarAvaliacao(@PathVariable Long id,
-                                                    @Valid @RequestBody AvaliacaoRequest avaliacao) {
-    Destino atualizado = destinoService.registrarAvaliacao(id, avaliacao.getNota());
-    return ResponseEntity.ok(atualizado);
-}
+    @GetMapping("/{id}")
+    public ResponseEntity<Destino> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(destinoService.buscarPorId(id));
+    }
 
-@DeleteMapping("/{id}")
-public ResponseEntity<Void> excluir(@PathVariable Long id) {
-    destinoService.excluir(id);
-    return ResponseEntity.noContent().build();
-}
+    @PutMapping("/{id}")
+    public ResponseEntity<Destino> atualizar(@PathVariable Long id,
+                                             @Valid @RequestBody Destino destino) {
+        return ResponseEntity.ok(destinoService.atualizar(id, destino));
+    }
 
+    @PatchMapping("/{id}/avaliacoes")
+    public ResponseEntity<Destino> registrarAvaliacao(@PathVariable Long id,
+                                                      @Valid @RequestBody AvaliacaoRequest avaliacao) {
+        Destino atualizado = destinoService.registrarAvaliacao(id, avaliacao.getNota());
+        return ResponseEntity.ok(atualizado);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+        destinoService.excluir(id);
+        return ResponseEntity.noContent().build();
+    }
 }
